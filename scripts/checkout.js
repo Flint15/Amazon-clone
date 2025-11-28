@@ -152,22 +152,22 @@ document.querySelectorAll('.js-update-link')
     })
   })
 
-  document.querySelectorAll('.js-save-link')
-    .forEach(link => {
-      link.addEventListener('click', () => {
-        const productId = link.dataset.productId
+document.querySelectorAll('.js-save-link')
+  .forEach(link => {
+    link.addEventListener('click', () => {
+      const productId = link.dataset.productId
 
-        const container = document.querySelector(
-          `.js-cart-item-container-${productId}`
-        )
-        container.classList.remove('is-editing-quantity')
+      const container = document.querySelector(
+        `.js-cart-item-container-${productId}`
+      )
+      container.classList.remove('is-editing-quantity')
 
-        const newQuantity = Number(document
-          .querySelector(`.js-quantity-input-${productId}`)
-            .value)
+      const newQuantity = Number(document
+        .querySelector(`.js-quantity-input-${productId}`)
+          .value)
 
-        updateQuantity(productId, newQuantity)
-        updateProductQuantity(productId, newQuantity)
-        updateCartQuantity()
-      })
+      updateQuantity(productId, newQuantity)
+      updateProductQuantity(productId, newQuantity)
+      updateCartQuantity()
     })
+  })
