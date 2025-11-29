@@ -11,6 +11,7 @@ import {hello} from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js'
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js'
 import {deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js'
 import { renderPaymentSummary } from './paymentSummary.js'
+import { renderCheckoutHeader } from './checkoutHeader.js'
 
 export function renderOrderSummary() {
 
@@ -133,10 +134,9 @@ export function renderOrderSummary() {
       link.addEventListener('click', () => {
         const productId = link.dataset.productId
         removeFromCart(productId)
-        updateCartQuantity()
         
+        renderCheckoutHeader()
         renderOrderSummary()
-
         renderPaymentSummary()
       })
     })
@@ -150,20 +150,11 @@ export function renderOrderSummary() {
         renderPaymentSummary()
       })
     })
-    
-  function updateCartQuantity() {
-    const cartQuantity = calculateCartQuantity()
-    
-    document.querySelector('.js-return-to-home-link')
-      .innerHTML = `${cartQuantity} items`
-  }
   
   function updateProductQuantity(productId, newQuantity) {
     document.querySelector(`.js-quantity-label-${productId}`)
       .innerHTML = newQuantity
   }
-  
-  updateCartQuantity()
   
   document.querySelectorAll('.js-update-link')
     .forEach(link => {
@@ -204,7 +195,8 @@ export function renderOrderSummary() {
     
     updateQuantity(productId, newQuantity)
     updateProductQuantity(productId, newQuantity)
-    updateCartQuantity()
+    renderPaymentSummary()
+    renderCheckoutHeader()
     
     const container = document.querySelector(
       `.js-cart-item-container-${productId}`
