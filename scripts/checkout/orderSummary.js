@@ -136,11 +136,6 @@ export function renderOrderSummary() {
       })
     })
   
-  function updateProductQuantity(productId, newQuantity) {
-    document.querySelector(`.js-quantity-label-${productId}`)
-      .innerHTML = newQuantity
-  }
-  
   document.querySelectorAll('.js-update-link')
     .forEach(link => {
       link.addEventListener('click', () => {
@@ -179,7 +174,8 @@ export function renderOrderSummary() {
     }
     
     updateQuantity(productId, newQuantity)
-    updateProductQuantity(productId, newQuantity)
+    
+    renderOrderSummary()
     renderPaymentSummary()
     renderCheckoutHeader()
     
@@ -188,12 +184,4 @@ export function renderOrderSummary() {
     )
     container.classList.remove('is-editing-quantity')
   }
-  
-  document.querySelectorAll('.js-save-link')
-    .forEach(link => {
-      link.addEventListener('click', () => {
-        const productId = link.dataset.productId
-  
-      })
-    })
 }
