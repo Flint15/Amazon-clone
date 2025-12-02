@@ -91,4 +91,25 @@ describe('test suite: renderOrderSummary', () => {
         .innerText
     ).toEqual('$20.95')
   })
+  it('Update delivery option', () => {
+    document.querySelector(`
+      .js-delivery-option-${productId1}-3`)
+        .click()
+    const inputElement = document
+      .querySelector(`
+        .js-delivery-option-input-${productId1}-3`)
+    expect(inputElement.checked).toEqual(true)
+    expect(cart.length).toEqual(2)
+    expect(cart[0].productId && cart[0].deliveryOptionId)
+      .toEqual(productId1 && '3')
+        
+    const shippingPrice = document
+      .querySelector(`.js-payment-shipping-price`)
+        .innerText
+    const totalPrice = document
+      .querySelector(`.js-payment-total-price`)
+        .innerText
+    expect(shippingPrice && totalPrice)
+      .toEqual('$14.98' && '$63.50')
+  })
 })
