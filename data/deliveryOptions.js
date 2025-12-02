@@ -36,7 +36,6 @@ export function calculateDeliveryDate(deliveryOption) {
   return dateString
 }
 
-
 export const deliveryOptions = [{
   id: '1',
   deliveryDays: 7,

@@ -143,7 +143,7 @@ describe('test suite: updateDeliveryOption', () => {
       ))
   })
   it('Update the delivey option of the product that isn\'t in the cart', () => {
-    updateDeliveryOption('123')
+    updateDeliveryOption('123', '2')
     expect(cart).toEqual(
       [{
         productId: productId1,
