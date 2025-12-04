@@ -1,5 +1,4 @@
 import {
-  calculateCartQuantity, 
   cart, 
   removeFromCart, 
   updateQuantity,

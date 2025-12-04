@@ -29,7 +29,6 @@ class Car {
     }
 
     this.speed += 5
-
     if (this.speed > 200) {
       this.speed = 200
     }
@@ -37,7 +36,6 @@ class Car {
 
   brake() {
     this.speed -= 5
-
     if (this.speed < 0) {
       this.speed = 0
     }
@@ -107,15 +105,19 @@ car1.openTrunk()
 car1.go()
 car1.closeTrunk()
 car1.go()
-car2.openTrunk()
-
 car1.displayInfo()
+
+car2.openTrunk()
+car2.go()
+car2.closeTrunk()
+car2.go()
+car2.go()
 car2.displayInfo()
 
 const car3 = new RaceCar({
   brand: 'McLaren',
   model: 'F1',
-  acceleration: 20
+  acceleration: 20 
 })
 
 car3.displayInfo()
