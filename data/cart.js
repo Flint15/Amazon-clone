@@ -22,7 +22,7 @@ function saveToStorage() {
   localStorage.setItem('cart', JSON.stringify(cart))
 }
 
-export function addToCart(productId) {
+export function addToCart(productId, orderQuantity) {
   let matchingItem
   
   cart.forEach(cartItem => {
@@ -30,17 +30,16 @@ export function addToCart(productId) {
       matchingItem = cartItem
     }
   })
-  
+
   if (matchingItem) {
-    matchingItem.quantity++
+    matchingItem.quantity += orderQuantity
   } else {
     cart.push({
       productId: productId,
-      quantity: 1,
+      quantity: orderQuantity,
       deliveryOptionId: '1'
     })
   }
-
   saveToStorage()
 }
 

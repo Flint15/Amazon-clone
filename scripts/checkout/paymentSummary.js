@@ -2,7 +2,8 @@ import { cart, calculateCartQuantity} from "../../data/cart.js"
 import { getProduct } from "../../data/products.js"
 import { getDeliveryOption } from "../../data/deliveryOptions.js"
 import {formatCurrency} from '../utils/money.js'
-import { addOrder } from "../../data/orders.js"
+import { addOrder, clearOrdersList, orders } from "../../data/orders.js"
+import { loadOrderPage } from "../orders.js"
 
 export function renderPaymentSummary() {
   let productPriceCents = 0
@@ -88,6 +89,8 @@ export function renderPaymentSummary() {
         })
   
         const order = await response.json()
+        
+        clearOrdersList() //Clear last order
         addOrder(order)
       } catch (error) {
         console.log(`
@@ -95,6 +98,9 @@ export function renderPaymentSummary() {
           Try again later
         `)
       }
+      console.log(orders)
+      
+      //await loadOrderPage(orders)
 
       window.location.href = 'orders.html'
     })

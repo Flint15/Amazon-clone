@@ -1,9 +1,18 @@
-export const orders = JSON
+export let orders = JSON
   .parse(localStorage.getItem('orders')) || []
 
 export function addOrder(order) {
   orders.unshift(order)
   saveToStorage()
+}
+
+export function clearOrdersList() {
+  orders = []
+  clearOrdersListStorage()
+}
+
+function clearOrdersListStorage() {
+  localStorage.setItem('orders', JSON.stringify([]))
 }
 
 function saveToStorage() {

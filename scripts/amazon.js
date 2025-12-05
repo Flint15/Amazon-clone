@@ -6,6 +6,11 @@ loadProducts(renderProductsGrid)
 function renderProductsGrid() {
   let productsHTML = ''
 
+  const productsQuantity = {}
+  products.forEach(product => {
+    productsQuantity[product.id] = 1
+  })
+
   products.forEach(product => {
     productsHTML += `
     <div class="product-container">
@@ -31,7 +36,9 @@ function renderProductsGrid() {
       </div>
 
       <div class="product-quantity-container">
-        <select>
+        <select class="
+          js-select-element"
+          data-select-id="${product.id}">
           <option selected value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -79,8 +86,20 @@ function renderProductsGrid() {
     .forEach(button => {
       button.addEventListener('click', () => {
         const productId = button.dataset.productId
-        addToCart(productId)
+        const orderQuantity = productsQuantity[productId]
+
+        addToCart(productId, orderQuantity)
         updateCartQuantity()
+      })
+    })
+  
+  document.querySelectorAll('.js-select-element')
+    .forEach(element => {
+      element.addEventListener('change', event => {
+        const productId = element.dataset.selectId
+        const orderQuantity = element.value
+
+        productsQuantity[productId] = Number(orderQuantity)
       })
     })
 }
