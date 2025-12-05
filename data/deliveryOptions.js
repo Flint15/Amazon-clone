@@ -18,16 +18,10 @@ function isWeekend(date) {
 }
 
 export function calculateDeliveryDate(deliveryOption) {
-  let remainingDays = deliveryOption.deliveryDays
-  let deliveryDate = dayjs().subtract(1, 'day')
+  let today = dayjs()
 
-  while (remainingDays > 0) {
-    deliveryDate = deliveryDate.add(1, 'day')
-
-    if (!isWeekend(deliveryDate)) {
-      remainingDays--
-    }
-  }
+  const deliveryDate = today
+    .add(deliveryOption.deliveryDays, 'day')
 
   const dateString = deliveryDate.format(
     'dddd, MMMM D'

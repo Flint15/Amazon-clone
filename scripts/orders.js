@@ -1,7 +1,3 @@
-import { orders } from "../data/orders.js"
-
-console.log(orders)
-
 export function loadOrderPage(orders) {
   let html = ''
   console.log(orders)

@@ -3,7 +3,7 @@ import { getProduct } from "../../data/products.js"
 import { getDeliveryOption } from "../../data/deliveryOptions.js"
 import {formatCurrency} from '../utils/money.js'
 import { addOrder, clearOrdersList, orders } from "../../data/orders.js"
-import { loadOrderPage } from "../orders.js"
+//import { loadOrderPage } from "../orders.js"
 
 export function renderPaymentSummary() {
   let productPriceCents = 0
@@ -98,10 +98,13 @@ export function renderPaymentSummary() {
           Try again later
         `)
       }
-      console.log(orders)
+      const order = orders[0].products.map(product => {
+        return product
+      })
+      console.log(order)
       
-      //await loadOrderPage(orders)
+      //await loadOrderPage(order)
 
-      window.location.href = 'orders.html'
+      //window.location.href = 'orders.html'
     })
 }
