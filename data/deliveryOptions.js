@@ -1,5 +1,9 @@
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js'
 
+export function getTodayDate() {
+  return dayjs().format('MMMM D')
+}
+
 export function getDeliveryOption(deliveryOptionId) {
   let deliveryOption
 
@@ -10,11 +14,6 @@ export function getDeliveryOption(deliveryOptionId) {
   })
 
   return deliveryOption || deliveryOptions[0]
-}
-
-function isWeekend(date) {
-  const dayOfWeek = date.format('dddd')
-  return dayOfWeek === 'Saturday' || dayOfWeek === 'Sunday'
 }
 
 export function calculateDeliveryDate(deliveryOption) {
@@ -28,6 +27,10 @@ export function calculateDeliveryDate(deliveryOption) {
   )
 
   return dateString
+}
+
+export function getMonthDay(date) {
+  return dayjs(date).format('MMMM D')
 }
 
 export const deliveryOptions = [{

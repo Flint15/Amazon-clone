@@ -1,9 +1,8 @@
-import { cart, calculateCartQuantity} from "../../data/cart.js"
+import { cart, calculateCartQuantity, clearCart} from "../../data/cart.js"
 import { getProduct } from "../../data/products.js"
-import { getDeliveryOption } from "../../data/deliveryOptions.js"
+import { getDeliveryOption, getMonthDay, getTodayDate } from "../../data/deliveryOptions.js"
 import {formatCurrency} from '../utils/money.js'
-import { addOrder, clearOrdersList, orders } from "../../data/orders.js"
-//import { loadOrderPage } from "../orders.js"
+import { addOrder, clearOrdersList, orders, saveOrderInfos } from "../../data/orders.js"
 
 export function renderPaymentSummary() {
   let productPriceCents = 0
@@ -20,7 +19,7 @@ export function renderPaymentSummary() {
   const totalBeforeTaxCents = productPriceCents + shippingPriceCents
   const taxCents = totalBeforeTaxCents * 0.1
   const totalCents = totalBeforeTaxCents + taxCents
-
+  
   const paymentSummaryHTML = `
     <div class="payment-summary-title">
       Order Summary
@@ -78,6 +77,11 @@ export function renderPaymentSummary() {
   document.querySelector('.js-place-order')
     .addEventListener('click', async () => {
       try {
+        if (calculateCartQuantity() === 0) {
+          alert('You can\'t order empty cart.')
+          return
+        }
+
         const response = await fetch('https://supersimplebackend.dev/orders', {
           method: 'POST',
           headers: {
@@ -88,23 +92,16 @@ export function renderPaymentSummary() {
           })
         })
   
-        const order = await response.json()
+        const orders = await response.json()
         
-        clearOrdersList() //Clear last order
-        addOrder(order)
+        //clearOrdersList() //Clear last order
+        addOrder(orders)
       } catch (error) {
         console.log(`
           Unexpected error - "${error}"
           Try again later
         `)
       }
-      const order = orders[0].products.map(product => {
-        return product
-      })
-      console.log(order)
-      
-      //await loadOrderPage(order)
-
-      //window.location.href = 'orders.html'
+      window.location.href = 'orders.html'
     })
 }

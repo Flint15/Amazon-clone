@@ -16,7 +16,7 @@ export function renderOrderSummary() {
   
   cart.forEach(cartItem => {
     const productId = cartItem.productId
-  
+    
     const matchingProduct = getProduct(productId)
   
     const deliveryOptionId = cartItem.deliveryOptionId

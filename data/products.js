@@ -3,6 +3,17 @@ import formatCurrency from "../scripts/utils/money.js"
 export function getProduct(productId) {
   let matchingProduct
 
+  if (products.length === 0) {
+    const products = JSON.parse(localStorage
+      .getItem('products'))
+    
+    products.forEach(product => {
+      if (product.id === productId) {
+        matchingProduct = product
+      }
+  })
+  }
+
   products.forEach(product => {
     if (product.id === productId) {
       matchingProduct = product
@@ -10,6 +21,10 @@ export function getProduct(productId) {
   })
 
   return matchingProduct
+}
+
+export function getProductPrice(productId) {
+  return getProduct(productId).priceCents
 }
 
 export class Product {
@@ -122,13 +137,19 @@ export function loadProductsFetch() {
         }
         return new Product(productDetails)
       })
-      
+
+      saveToStorage()
+
       console.log('load products')
     }).catch((error) => {
       console.log(`Unexpected "${error}". Please try again later.`)
     })
   
   return promise
+}
+
+function saveToStorage() {
+  localStorage.setItem('products', JSON.stringify(products))
 }
 /*
 loadProductsFetch().then(() => {
