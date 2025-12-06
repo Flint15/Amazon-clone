@@ -2,11 +2,11 @@ import formatCurrency from "../scripts/utils/money.js"
 
 export function getProduct(productId) {
   let matchingProduct
-
+  
   if (products.length === 0) {
     const products = JSON.parse(localStorage
       .getItem('products'))
-    
+      
     products.forEach(product => {
       if (product.id === productId) {
         matchingProduct = product
@@ -33,6 +33,7 @@ export class Product {
   name
   rating
   priceCents
+  keywords
 
   constructor(productDetails) {
     this.id = productDetails.id
@@ -40,6 +41,7 @@ export class Product {
     this.name = productDetails.name
     this.rating = productDetails.rating
     this.priceCents = productDetails.priceCents 
+    this.keywords = productDetails.keywords
   }
 
   getStarsUrl() {
@@ -122,13 +124,13 @@ const object3 = {
 
 export let products = []
 
-export function loadProductsFetch() {
+export function loadProductsFetch(func) {
   const promise = fetch(
     'https://supersimplebackend.dev/products'
   ).then((response) => {
       return response.json()
     }).then((productsData) => {
-      products = productsData.map((productDetails) => {
+      products = productsData.map(productDetails => {
         if (productDetails.type === 'clothing') {
           return new Clothing(productDetails)
         }
@@ -138,13 +140,13 @@ export function loadProductsFetch() {
         return new Product(productDetails)
       })
 
-      saveToStorage()
-
       console.log('load products')
+      saveToStorage()
+      func ? func() : ''
+      
     }).catch((error) => {
       console.log(`Unexpected "${error}". Please try again later.`)
     })
-  
   return promise
 }
 
@@ -157,7 +159,7 @@ loadProductsFetch().then(() => {
 })
 */
 
-export function loadProducts(func) {
+export function loadProducts(func=false) {
   const xhr = new XMLHttpRequest()
 
   xhr.addEventListener('load', () => {
@@ -174,8 +176,7 @@ export function loadProducts(func) {
         return new Product(productDetails)
       })
     console.log('load products')
-
-    func()
+    func ? func() : ''
   })
 
   xhr.addEventListener('error', (error) => {

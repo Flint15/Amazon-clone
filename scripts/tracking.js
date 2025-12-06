@@ -2,17 +2,17 @@ import { calculateCartQuantity } from "../data/cart.js"
 import { getDeliveryDate, getDay, getTodayDate } from "../data/deliveryOptions.js"
 import { getOrder, getProductOrderData } from "../data/orders.js"
 import { getProduct } from "../data/products.js"
+import { renderAmazonHeader } from "./header.js"
 
 const url = new URL(window.location.href)
 const orderId = url.searchParams.get('orderId')
 const productId = url.searchParams.get('productId')
 
-document.querySelector('.js-cart-quantity')
-  .innerText = calculateCartQuantity()
-
 renderTrackingPage()
 
 function renderTrackingPage() {
+  renderAmazonHeader()
+
   const orderTrackingContainer = document
     .querySelector('.js-order-tracking')
 

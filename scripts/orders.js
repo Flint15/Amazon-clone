@@ -2,9 +2,11 @@ import { addToCart, calculateCartQuantity } from "../data/cart.js";
 import { getMonthDay } from "../data/deliveryOptions.js";
 import { orders } from "../data/orders.js";
 import { getProduct } from "../data/products.js";
+import { renderAmazonHeader } from "./header.js";
 import formatCurrency from "./utils/money.js";
 
 function renderPage() {
+  renderAmazonHeader()
   updateCartDisplay()
   renderOrders()
 }

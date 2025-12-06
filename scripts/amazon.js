@@ -1,18 +1,66 @@
 import {addToCart, calculateCartQuantity} from '../data/cart.js'
-import {products, loadProducts} from '../data/products.js'
+import {products, loadProductsFetch} from '../data/products.js'
+import {renderAmazonHeader} from './header.js'
 
-loadProducts(renderProductsGrid)
+const url = new URLSearchParams(location.search)
+const parameter = url.get('search')
+  ? url.get('search').toLowerCase()
+  : false
+
+loadProductsFetch(renderAmazonPage)
+
+function renderAmazonPage() {
+  renderAmazonHeader()
+  renderProductsGrid()
+}
 
 function renderProductsGrid() {
-  let productsHTML = ''
-
   const productsQuantity = {}
   products.forEach(product => {
     productsQuantity[product.id] = 1
   })
 
-  products.forEach(product => {
-    productsHTML += `
+  document.querySelector('.js-products-grid')
+    .innerHTML = htmlAccamulation()
+
+  updateCartQuantity()
+  addEventListeners(productsQuantity)
+}
+
+function htmlAccamulation() {
+  let productsHTML = ''
+  let filteredProducts = products
+  
+  if(parameter) {
+    filteredProducts = products.filter(product => {
+      if (
+        product.name.toLowerCase().includes(parameter)
+        ||
+        product.keywords.includes(parameter)
+      ) {
+        return true
+      }
+    })
+    if (filteredProducts.length === 0) {
+      console.log('123')
+      document.querySelector('.js-products-grid')
+        return `
+          <div class="no-product-page">
+            There aren't products like this bruh ;(
+          </div>
+        `
+    }
+  }
+
+  filteredProducts.forEach(product => {
+    productsHTML += createProductHTML(product)
+  })
+
+  return productsHTML
+}
+
+function createProductHTML(product) {
+  return `
     <div class="product-container">
       <div class="product-image-container">
         <img class="product-image"
@@ -68,20 +116,16 @@ function renderProductsGrid() {
       </button>
     </div>
     `
-  })
-
-  document.querySelector('.js-products-grid')
-    .innerHTML = productsHTML
-
-  function updateCartQuantity() {
+}
+  
+function updateCartQuantity() {
     const cartQuantity = calculateCartQuantity()
     
     document.querySelector('.js-cart-quantity')
       .innerHTML = cartQuantity
   }
 
-  updateCartQuantity()
-
+function addEventListeners(productsQuantity) {
   document.querySelectorAll('.js-add-to-cart')
     .forEach(button => {
       button.addEventListener('click', () => {
