@@ -10,7 +10,7 @@ function renderPage() {
 }
 renderPage()
 
-function updateCartDisplay() {
+export function updateCartDisplay() {
   const cartQuantity = calculateCartQuantity()
 
   document.querySelector('.js-cart-quantity')
@@ -95,7 +95,6 @@ function renderOrderHeader(order) {
 
 function renderOrderDetails(order) {
   let html = ''
-  console.log(order)
   order.products.forEach(product => {
     let {productId, estimatedDeliveryTime, quantity} = product
     const {image, name} = getProduct(productId)
@@ -126,7 +125,7 @@ function renderOrderDetails(order) {
       </div>
 
       <div class="product-actions">
-        <a href="tracking.html?orderId=${order.id}?productId=${productId}">
+        <a href="tracking.html?orderId=${order.id}&productId=${productId}">
           <button class="track-package-button button-secondary">
             Track package
           </button>

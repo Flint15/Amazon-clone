@@ -4,6 +4,10 @@ export function getTodayDate() {
   return dayjs().format('MMMM D')
 }
 
+export function getDay(date) {
+  return Number(dayjs(date).format('D'))
+}
+
 export function getDeliveryOption(deliveryOptionId) {
   let deliveryOption
 
@@ -31,6 +35,10 @@ export function calculateDeliveryDate(deliveryOption) {
 
 export function getMonthDay(date) {
   return dayjs(date).format('MMMM D')
+}
+
+export function getDeliveryDate(date) {
+  return dayjs(date).format('dddd, MMMM D')
 }
 
 export const deliveryOptions = [{

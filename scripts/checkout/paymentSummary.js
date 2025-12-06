@@ -1,8 +1,8 @@
-import { cart, calculateCartQuantity, clearCart} from "../../data/cart.js"
+import { cart, calculateCartQuantity} from "../../data/cart.js"
 import { getProduct } from "../../data/products.js"
-import { getDeliveryOption, getMonthDay, getTodayDate } from "../../data/deliveryOptions.js"
+import { getDeliveryOption} from "../../data/deliveryOptions.js"
 import {formatCurrency} from '../utils/money.js'
-import { addOrder, clearOrdersList, orders, saveOrderInfos } from "../../data/orders.js"
+import { addOrder } from "../../data/orders.js"
 
 export function renderPaymentSummary() {
   let productPriceCents = 0
